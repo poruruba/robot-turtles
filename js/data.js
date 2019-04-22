@@ -1,5 +1,14 @@
 'use strict';
 
+const Request = {
+    IDLE: 0,
+    JUMP: 1,
+    LASER: 2,
+    TURN_RIGHT: 5,
+    TURN_LEFT: 6,
+    GO: 7
+};
+
 const card_info_list = [
     {
         type: 'left',

@@ -153,14 +153,6 @@ var State = {
 };
 var g_state = State.IDLE;
 
-var Request = {
-    IDLE: 0,
-    JUMP: 1,
-    LASER: 2,
-    TURN_RIGHT: 5,
-    TURN_LEFT: 6,
-    GO: 7
-};
 var g_request = Request.IDLE;
 
 var g_resolve = null;
@@ -277,7 +269,7 @@ function update (){
 
                 // ジャンプ先の確認
                 var dir_jumped = next_dir(2);
-                if( dir_jumped == null || (g_map[dir_jumped.y][dir_jumped.x] != null && g_map[dir_jumped.y][dir_jumped.x].type != 'goal') ){
+                if( dir_jumped == null ){
                     gameOverReason = 'ジャンプした先でけがをしました。';
                     gameOver = true;
                     g_callback_player_move_complete();
