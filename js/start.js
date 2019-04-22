@@ -8,7 +8,7 @@ var vue_options = {
         card_info_list: card_info_list,
         card_list: [],
         block_map: [],
-        block_selecting: { item: 0 },
+        block_selecting_item: 0,
         player_angle: 0,
         block_info_list: block_info_list,
         game_state: 0,
@@ -65,7 +65,9 @@ var vue_options = {
             }
 
             // 次回またマップ情報を復元できるようにCookiesに保存しておきます。
-            Cookies.set('block_map', JSON.stringify({ block_map : this.block_map, player_angle: this.player_angle } ));
+            Cookies.set('block_map', JSON.stringify({
+                block_map : this.block_map, player_angle: this.player_angle
+            } ));
 
             config.div = 'phaser_canvas';  //id=phaser_canvasのところにゲーム盤を表示します。
             this.game_state = 1;
@@ -78,7 +80,9 @@ var vue_options = {
             }
 
             // 次回またマップ情報を復元できるようにCookiesに保存しておきます。
-            Cookies.set('block_map', JSON.stringify({ block_map : this.block_map, player_angle: this.player_angle, card_list: this.card_list } ));
+            Cookies.set('block_map', JSON.stringify({
+                block_map : this.block_map, player_angle: this.player_angle, card_list: this.card_list
+            } ));
 
             // カード情報から1枚ずつゲーム盤操作部に操作要求を投げます。
             this.game_state = 2;
@@ -111,18 +115,10 @@ var vue_options = {
                 this.dialog_open('#result-dialog');
             }
         },
-        // ブロック選択ダイアログを表示します。
-        block_select_dialog: function(x, y){
-            this.block_selecting.x = x;
-            this.block_selecting.y = y;
-            this.block_selecting.item = this.block_map[y][x];
-            this.dialog_open('#block-select');
-        },
         // ブロックを選択しました。
-        block_select: function(){
-            this.block_map[this.block_selecting.y][this.block_selecting.x] = this.block_selecting.item;
+        block_select: function(x, y){
+            this.block_map[y][x] = this.block_selecting_item;
             this.block_map = JSON.parse(JSON.stringify(this.block_map));
-            this.dialog_close('#block-select');
         },
         // 選んだカードリストをリセットします。
         card_list_reset: function(){
@@ -170,7 +166,9 @@ var vue_options = {
         },
         // マップ情報をJSON形式にしてダイアログ表示します。
         map_dialog: function(){
-            this.map_json = JSON.stringify({ block_map : this.block_map, player_angle: this.player_angle, card_list: this.card_list });
+            this.map_json = JSON.stringify({
+                block_map : this.block_map, player_angle: this.player_angle, card_list: this.card_list
+            });
             this.dialog_open('#map-dialog');
         },
     },
