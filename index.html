@@ -60,7 +60,7 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-default" v-on:click="game_intialize()" v-if="game_state==0">Game Initialize</button>
+            <button class="btn btn-default" v-on:click="game_init()" v-if="game_state==0">Game Initialize</button>
         </div>
         <button class="btn btn-default btn-lg" v-on:click="player_start()" v-if="game_state==1">始める</button>
         <hr>
@@ -143,8 +143,8 @@
     
     </div>
 
-    <script src="js/index.js"></script>
     <script src="js/data.js"></script>
+    <script src="js/index.js"></script>
     <script src="js/start.js"></script>
 </body>
 </html>
