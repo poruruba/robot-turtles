@@ -21,7 +21,7 @@ var vue_options = {
     },
     methods: {
         //ゲーム盤操作部を初期化します。
-        game_intialize: function(){
+        game_init: function(){
             //マップ情報を生成します。
             var config = {
                 map: []
