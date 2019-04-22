@@ -66,7 +66,7 @@ var vue_options = {
 
             // 次回またマップ情報を復元できるようにCookiesに保存しておきます。
             Cookies.set('block_map', JSON.stringify({
-                block_map : this.block_map, player_angle: this.player_angle
+                block_map : this.block_map, player_angle: Number(this.player_angle)
             } ));
 
             config.div = 'phaser_canvas';  //id=phaser_canvasのところにゲーム盤を表示します。
@@ -81,7 +81,7 @@ var vue_options = {
 
             // 次回またマップ情報を復元できるようにCookiesに保存しておきます。
             Cookies.set('block_map', JSON.stringify({
-                block_map : this.block_map, player_angle: this.player_angle, card_list: this.card_list
+                block_map : this.block_map, player_angle: Number(this.player_angle), card_list: this.card_list
             } ));
 
             // カード情報から1枚ずつゲーム盤操作部に操作要求を投げます。
@@ -136,6 +136,8 @@ var vue_options = {
         // 保持しておいたCookieからマップ情報を復元します。
         cookie_reload: function(){
             var temp = Cookies.get('block_map');
+            if( !temp )
+                return;
             this.map_load(JSON.parse(temp));
         },
         // JSONからマップ情報を復元します。
@@ -151,7 +153,7 @@ var vue_options = {
                 return;
             }
             this.block_map = map.block_map;
-            this.palyer_angle = map.player_angele;
+            this.player_angle = map.player_angle;
             if( map.card_list && map.card_list[0] != undefined )
                 this.card_list = map.card_list;
         },
