@@ -35,6 +35,19 @@
             <p>
                 置き終わったら「Game Initialize」ボタンを押してください。
             </p>
+            <div class="form-inline">
+                ブロック：
+                <select class="form-control" v-model="block_selecting_item">
+                    <option v-bind:value="index" v-for="(block, index) in block_info_list">{{block.title}}</option>
+                </select>
+                &nbsp;プレイヤの初期角度：
+                <select class="form-control" v-model="player_angle" >
+                    <option value="0" selected>0°</option>
+                    <option value="90">90°</option>
+                    <option value="180">180°</option>
+                    <option value="270">270°</option>
+                </select>
+            </div>
             <button class="btn btn-default" v-on:click="cookie_reload()">リロード</button>
             <button class="btn btn-default" v-on:click="map_dialog()">JSON</button>
             <button class="btn btn-default" v-on:click="map_list_reset()">リセット</button>
@@ -42,7 +55,7 @@
                 <tbody>
                     <tr v-for="(rows, index_row) in block_map">
                         <td v-for="(column, index_column) in rows">
-                            <img v-bind:src="block_info_list[column].image" width="50" v-on:click="block_select_dialog(index_column, index_row)">
+                            <img v-bind:src="block_info_list[column].image" width="50" v-on:click="block_select(index_column, index_row)">
                         </td>
                     </tr>
                 </tbody>
@@ -64,38 +77,6 @@
                     <button class="btn btn-default center-block" v-on:click="card_list_reset()" v-if="game_state==1">やり直す</button>
                 </div>
         </div>
-
-        <div class="modal fade" id="block-select">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">ブロックの選択</h4>
-                    </div>
-                    <div class="modal-header">
-                        <div class="form-inline">
-                            ブロック：
-                            <select class="form-control" v-model="block_selecting.item">
-                                <option v-bind:value="index" v-for="(block, index) in block_info_list">{{block.title}}</option>
-                            </select>
-                            <div v-if="block_info_list[block_selecting.item].type=='player'">
-                                角度：
-                                <select class="form-control" v-model="player_angle" >
-                                    <option value="0" selected>0</option>
-                                    <option value="90">90</option>
-                                    <option value="180">180</option>
-                                    <option value="270">270</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                            <button class="btn btn-default" v-on:click="block_select()">OK</button>
-                            <button class="btn btn-default" v-on:click="dialog_close('#block-select')">キャンセル</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     
         <div class="modal fade" id="card-add">
             <div class="modal-dialog">
