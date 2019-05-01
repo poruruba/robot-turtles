@@ -89,7 +89,7 @@ var vue_options = {
             var ret = null;
             for( var i = 0 ; i < this.card_list.length ; i++ ){
                 ret = await player_move(this.card_info_list[this.card_list[i]].direct);
-                // もし途中でゲームおーばだった場合はループを抜けます。
+                // もし途中でゲームオーバーだった場合はループを抜けます。
                 if( ret.over )
                     break;
             }

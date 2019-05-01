@@ -172,6 +172,7 @@ async function player_move(direction){
         throw 'now moving';
     }
 
+    // 完了に時間がかかるので、とりあえすPromiseを返します。
     return new Promise((resolve, reject) =>{
         // 要求情報をグローバル変数にセット
         g_resolve = resolve;
@@ -183,13 +184,15 @@ async function player_move(direction){
 // 移動完了後のコールバック関数
 function g_callback_player_move_complete(){
     if( gameOver ){
+        // プレイヤの色を変えます
         player.setTint(0xff0000);
     }
     
+    // Promise状態をResolveします。
     g_resolve({
         x: g_player.x,
         y: g_player.y,
-        angle: player.angle,
+        angle: g_player.angle,
         over: gameOver,
         reason: gameOverReason,
         type: g_map[g_player.y][g_player.x] ? g_map[g_player.y][g_player.x].type : null
@@ -267,7 +270,7 @@ function update (){
                     return;
                 }
 
-                // ジャンプ先の確認
+                // 2つ先のジャンプ先の確認
                 var dir_jumped = next_dir(2);
                 if( dir_jumped == null ){
                     gameOverReason = 'ジャンプした先でけがをしました。';
@@ -292,7 +295,7 @@ function update (){
                 g_state = State.ROLLING;
                 this.tweens.add({
                     targets: player,
-                    angle: '+=90',
+                    angle: '+=90', //指定の仕方に注意
                     duration: MOVE_DURATION,
                     onComplete: g_callback_player_move_complete
                 });
@@ -303,7 +306,7 @@ function update (){
                 g_state = State.ROLLING;
                 this.tweens.add({
                     targets: player,
-                    angle: '-=90',
+                    angle: '-=90', //指定の仕方に注意
                     duration: MOVE_DURATION,
                     onComplete: g_callback_player_move_complete
                 });
@@ -320,7 +323,7 @@ function update (){
                 // 目の前が箱だった場合
                 if( g_map[dir.y][dir.x] != null && g_map[dir.y][dir.x].type == 'box' ){
                     var dir_pushed = next_dir(2);
-                    // 1つ先に何かある場合は動かさない
+                    // 2つ先に何かある場合は動かさない
                     if( dir_pushed == null || g_map[dir_pushed.y][dir_pushed.x] != null ){
                         g_callback_player_move_complete();
                         return;
@@ -363,6 +366,7 @@ function hitBomb (player, bomb){
 // 衝突検知(水たまり)
 function hitJumpable (player, bomb){
     console.log('hitJumpable')
+    // ジャンプ中だったら衝突しない
     if( g_request == Request.JUMP )
         return;
 
