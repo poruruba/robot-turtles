@@ -8,7 +8,7 @@ var vue_options = {
         card_info_list: card_info_list,
         card_list: [],
         block_map: [],
-        block_selecting_item: 0,
+        block_selecting_item: 1,
         player_angle: 0,
         block_info_list: block_info_list,
         game_state: 0,
